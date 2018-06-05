@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-// import { StripeProvider } from "react-stripe-elements";
-
-// import MyStoreCheckout from "./MyStoreCheckout";
 
 const styles = theme => ({});
 class HomePage extends Component {
@@ -11,12 +8,7 @@ class HomePage extends Component {
     this.state = {};
   }
   render() {
-    return (
-      <div>test</div>
-      // <StripeProvider apiKey="pk_test_12345">
-      //   <MyStoreCheckout />
-      // </StripeProvider>
-    );
+    return <div>HOME PAGE</div>;
   }
 }
 export default withStyles(styles)(HomePage);
