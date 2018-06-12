@@ -2,7 +2,7 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
 
-import Image from "../register-bg.png";
+import Image from "../bg.png";
 import RegisterForm from "./RegisterForm";
 
 const styles = theme => ({
@@ -21,7 +21,11 @@ function RegisterPage(props) {
   return (
     <div className={props.classes.root}>
       <RegisterForm />
-      <Button className={props.classes.button} href="https://www.orbmaps.com">
+      <Button
+        variant="contained"
+        className={props.classes.button}
+        href="https://www.orbmaps.com"
+      >
         Go back to homepage
       </Button>
     </div>

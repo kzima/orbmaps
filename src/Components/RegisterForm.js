@@ -13,7 +13,7 @@ const registerURL = process.env.REACT_APP_REGISTER_URL;
 
 const styles = theme => ({
   registerButton: {
-    marginTop: theme.spacing.unit * 4,
+    marginTop: theme.spacing.unit * 3,
     marginBottom: theme.spacing.unit * 3
   },
   root: theme.mixins.gutters({
@@ -26,7 +26,8 @@ const styles = theme => ({
   },
   paper: {
     margin: theme.spacing.unit * 2,
-    padding: theme.spacing.unit * 2
+    padding: theme.spacing.unit * 2,
+    borderRadius: 10
   },
   container: {
     display: "flex",
@@ -35,14 +36,20 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 300
+    width: 300,
+    maxWidth: "90%"
   },
   error: {
     color: "red"
   },
   logo: {
     width: 300,
+    maxWidth: "90%",
     margin: theme.spacing.unit
+  },
+  progress: {
+    marginTop: theme.spacing.unit * 2
+    // marginBottom: theme.spacing.unit
   }
 });
 
@@ -120,176 +127,199 @@ class RegisterForm extends React.Component {
         });
       })
       .then(response => {
-        if (response.ok) {
-          this.setState({ success: true });
-        } else {
+        if (!response.ok || response === undefined) {
           this.setState({
             processing: false,
             error: errorMessage
           });
+        } else {
+          this.setState({ success: true });
         }
       });
   };
 
   render() {
     const { classes } = this.props;
-    return this.state.success ? (
-      <Typography variant="subheading" gutterBottom>
-        Registration successful, thank you for your purchase! Check your email
-        account for your username and password and follow the link provided to
-        log in.
-      </Typography>
-    ) : (
+    return (
       <div className={classes.root}>
         <div className={classes.wrapper}>
           <form onSubmit={this.handleSubmit}>
-            <Paper elevation={20} className={classes.paper}>
+            <Paper elevation={14} className={classes.paper}>
               <img className={classes.logo} src={logo} alt="orbmaps logo" />
-              <Typography variant="subheading" gutterBottom>
-                Please enter your registration details
-              </Typography>
-              <Grid
-                container
-                wrap="nowrap"
-                spacing={0}
-                direction="column"
-                alignContent="center"
-              >
-                <Grid item>
-                  <TextField
-                    required
-                    id="name"
-                    label="Name"
-                    className={classes.textField}
-                    onChange={this.handleChange("name")}
-                    margin="dense"
-                  />
-                </Grid>
-                <Grid item>
-                  <TextField
-                    required
-                    id="email"
-                    label="Email"
-                    type="email"
-                    className={classes.textField}
-                    onChange={this.handleChange("email")}
-                    margin="dense"
-                  />
-                </Grid>
-                <Grid item>
-                  <TextField
-                    required
-                    id="company"
-                    label="Company"
-                    className={classes.textField}
-                    onChange={this.handleChange("company")}
-                    margin="dense"
-                  />
-                </Grid>
-                <Grid item>
-                  <TextField
-                    required
-                    id="address"
-                    label="Address"
-                    className={classes.textField}
-                    onChange={this.handleChange("address")}
-                    margin="dense"
-                  />
-                </Grid>
-                <Grid item>
-                  <TextField
-                    required
-                    id="city"
-                    label="City"
-                    className={classes.textField}
-                    onChange={this.handleChange("city")}
-                    margin="dense"
-                  />
-                </Grid>
-                <Grid item>
-                  <TextField
-                    required
-                    id="state"
-                    label="State"
-                    className={classes.textField}
-                    onChange={this.handleChange("state")}
-                    margin="dense"
-                  />
-                </Grid>
-                <Grid item>
-                  <TextField
-                    required
-                    id="postcode"
-                    label="Postcode"
-                    onChange={this.handleChange("postcode")}
-                    type="tel"
-                    className={classes.textField}
-                    margin="dense"
-                  />
-                </Grid>
-                <Grid item>
-                  <TextField
-                    required
-                    id="phone"
-                    label="Phone"
-                    onChange={this.handleChange("phone")}
-                    type="tel"
-                    className={classes.textField}
-                    margin="dense"
-                  />
-                </Grid>
-                <Grid item>
-                  <TextField
-                    required
-                    inputRef={element => (this.password.current = element)}
-                    id="password"
-                    label="Password"
-                    onChange={event => {
-                      this.handleChange("password")(event);
-                      this.validatePassword();
-                    }}
-                    type="password"
-                    className={classes.textField}
-                    margin="dense"
-                    helperText="Must contain a minimum of 8 characters and at least one uppercase and one lowercase letter"
-                  />
-                </Grid>
-                <Grid item>
-                  <TextField
-                    required
-                    inputRef={element =>
-                      (this.confirmPassword.current = element)
-                    }
-                    id="confirmPassword"
-                    label="Confirm Password"
-                    onChange={this.validatePassword}
-                    type="password"
-                    className={classes.textField}
-                    margin="dense"
-                  />
-                </Grid>
-              </Grid>
-              <Button
-                className={classes.registerButton}
-                variant="contained"
-                color="primary"
-                type="submit"
-              >
-                Register
-              </Button>
-              {/* <button disabled={this.state.processing}>Register</button> */}
-            </Paper>
-            {this.state.processing && (
-              <div>
+              {this.state.success ? (
                 <Typography variant="subheading" gutterBottom>
-                  Processing
+                  Registration successful, thank you! Check your email account
+                  for your username and password and follow the link provided to
+                  log in.
                 </Typography>
-                <CircularProgress className={classes.progress} />
-              </div>
-            )}
-            <Typography className={classes.error}>
-              {this.state.error}
-            </Typography>
+              ) : (
+                <div>
+                  <Typography variant="subheading" gutterBottom>
+                    Please enter your registration details
+                  </Typography>
+                  <Grid
+                    container
+                    wrap="nowrap"
+                    spacing={0}
+                    direction="column"
+                    alignContent="center"
+                  >
+                    <Grid item>
+                      <TextField
+                        required
+                        id="name"
+                        label="Name"
+                        className={classes.textField}
+                        onChange={this.handleChange("name")}
+                        margin="dense"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        required
+                        id="email"
+                        label="Email"
+                        type="email"
+                        className={classes.textField}
+                        onChange={this.handleChange("email")}
+                        margin="dense"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        required
+                        id="company"
+                        label="Company"
+                        className={classes.textField}
+                        onChange={this.handleChange("company")}
+                        margin="dense"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        required
+                        id="address"
+                        label="Address"
+                        className={classes.textField}
+                        onChange={this.handleChange("address")}
+                        margin="dense"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        required
+                        id="city"
+                        label="City"
+                        className={classes.textField}
+                        onChange={this.handleChange("city")}
+                        margin="dense"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        required
+                        id="state"
+                        label="State"
+                        className={classes.textField}
+                        onChange={this.handleChange("state")}
+                        margin="dense"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        required
+                        id="postcode"
+                        label="Postcode"
+                        onChange={this.handleChange("postcode")}
+                        type="tel"
+                        className={classes.textField}
+                        margin="dense"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        required
+                        id="phone"
+                        label="Phone"
+                        onChange={this.handleChange("phone")}
+                        type="tel"
+                        className={classes.textField}
+                        margin="dense"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        required
+                        inputRef={element => (this.password.current = element)}
+                        id="password"
+                        label="Password"
+                        onChange={event => {
+                          this.handleChange("password")(event);
+                          this.validatePassword();
+                        }}
+                        type="password"
+                        className={classes.textField}
+                        margin="dense"
+                        helperText="Must contain a minimum of 8 characters and at least one uppercase and one lowercase letter"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        required
+                        inputRef={element =>
+                          (this.confirmPassword.current = element)
+                        }
+                        id="confirmPassword"
+                        label="Confirm Password"
+                        onChange={this.validatePassword}
+                        type="password"
+                        className={classes.textField}
+                        margin="dense"
+                      />
+                    </Grid>
+                  </Grid>
+                  <Button
+                    className={classes.registerButton}
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    disabled={this.state.processing}
+                  >
+                    Register
+                  </Button>
+                  <Grid
+                    container
+                    wrap="nowrap"
+                    spacing={0}
+                    direction="column"
+                    alignContent="center"
+                  >
+                    {this.state.processing && (
+                      <Grid item>
+                        <CircularProgress className={classes.progress} />
+                      </Grid>
+                    )}
+                    <Grid item>
+                      <Typography className={classes.error}>
+                        {this.state.error}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </div>
+              )}
+            </Paper>
+            {/* {this.state.processing && ( */}
+            {/* ( */}
+            {/* <div> */}
+            {/* <Typography variant="subheading" gutterBottom> */}
+            {/* Processing */}
+            {/* </Typography> */}
+            {/* <CircularProgress className={classes.progress} /> */}
+            {/* </div> */}
+            {/* )} */}
+            {/* <Typography className={classes.error}> */}
+            {/* {this.state.error} */}
+            {/* </Typography> */}
           </form>
         </div>
       </div>
