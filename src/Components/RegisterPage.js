@@ -7,7 +7,10 @@ import RegisterForm from "./RegisterForm";
 
 const styles = theme => ({
   root: {
-    backgroundImage: `url(${Image})`
+    backgroundImage: `url(${Image})`,
+    backgroundSize: "cover",
+    backgroundBlendMode: "color",
+    backgroundColor: "rgba(255,255,255,0.9)"
   },
   button: {
     marginBottom: theme.spacing.unit * 4
@@ -19,7 +22,7 @@ function RegisterPage(props) {
     <div className={props.classes.root}>
       <RegisterForm />
       <Button className={props.classes.button} href="https://www.orbmaps.com">
-        Go Back
+        Go back to homepage
       </Button>
     </div>
   );

@@ -9,6 +9,8 @@ import { withStyles } from "@material-ui/core/styles";
 
 import logo from "../logo.png";
 
+const registerURL = process.env.REACT_APP_REGISTER_URL;
+
 const styles = theme => ({
   registerButton: {
     marginTop: theme.spacing.unit * 4,
@@ -100,22 +102,21 @@ class RegisterForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    const errorMessage =
+      "Registration unsuccessful. Contact us for assistance at support@orbmaps.com";
     this.setState({
       processing: true,
       error: ""
     });
-    fetch(
-      "https://9qeqahtb7i.execute-api.ap-southeast-2.amazonaws.com/b/v1/register",
-      {
-        method: "POST",
-        body: JSON.stringify(this.state.data),
-        headers: { "Content-Type": "application/json" }
-      }
-    )
+    fetch(registerURL, {
+      method: "POST",
+      body: JSON.stringify(this.state.data),
+      headers: { "Content-Type": "application/json" }
+    })
       .catch(() => {
         this.setState({
           processing: false,
-          error: "Registration unsuccessful. Contact us for assistance."
+          error: errorMessage
         });
       })
       .then(response => {
@@ -124,7 +125,7 @@ class RegisterForm extends React.Component {
         } else {
           this.setState({
             processing: false,
-            error: "Registration unsuccessful. Contact us for assistance."
+            error: errorMessage
           });
         }
       });
