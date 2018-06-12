@@ -7,6 +7,10 @@ import theme from "./theme";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 
+if (module.hot) {
+  module.hot.accept();
+}
+
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
     <BrowserRouter>

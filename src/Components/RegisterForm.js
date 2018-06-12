@@ -125,10 +125,10 @@ class RegisterForm extends React.Component {
       body: JSON.stringify(this.state.data),
       headers: { "Content-Type": "application/json" }
     })
-      .catch(() => {
+      .catch(({ message }) => {
         this.setState({
           processing: false,
-          error: errorMessage
+          error: message || errorMessage
         });
       })
       .then(response => {
@@ -158,157 +158,167 @@ class RegisterForm extends React.Component {
                   log in.
                 </Typography>
               ) : (
-                  <div>
-                    <Typography variant="subheading" gutterBottom>
-                      Please enter your registration details
+                <div>
+                  <Typography variant="subheading" gutterBottom>
+                    Please enter your registration details
                   </Typography>
-                    <Grid
-                      container
-                      wrap="nowrap"
-                      spacing={0}
-                      direction="column"
-                      alignContent="center"
-                    >
-                      <Grid item>
-                        <TextField
-                          required
-                          id="name"
-                          label="Name"
-                          className={classes.textField}
-                          onChange={this.handleChange("name")}
-                          margin="dense"
-                        />
-                      </Grid>
-                      <Grid item>
-                        <TextField
-                          required
-                          id="email"
-                          label="Email"
-                          type="email"
-                          className={classes.textField}
-                          onChange={this.handleChange("email")}
-                          margin="dense"
-                        />
-                      </Grid>
-                      <Grid item>
-                        <TextField
-                          required
-                          id="company"
-                          label="Company"
-                          className={classes.textField}
-                          onChange={this.handleChange("company")}
-                          margin="dense"
-                        />
-                      </Grid>
-                      <Grid item>
-                        <TextField
-                          required
-                          id="address"
-                          label="Address"
-                          className={classes.textField}
-                          onChange={this.handleChange("address")}
-                          margin="dense"
-                        />
-                      </Grid>
-                      <Grid item>
-                        <TextField
-                          required
-                          id="city"
-                          label="City"
-                          className={classes.textField}
-                          onChange={this.handleChange("city")}
-                          margin="dense"
-                        />
-                      </Grid>
-                      <Grid item>
-                        <TextField
-                          required
-                          id="state"
-                          label="State"
-                          className={classes.textField}
-                          onChange={this.handleChange("state")}
-                          margin="dense"
-                        />
-                      </Grid>
-                      <Grid item>
-                        <TextField
-                          required
-                          id="postcode"
-                          label="Postcode"
-                          onChange={this.handleChange("postcode")}
-                          type="tel"
-                          className={classes.textField}
-                          margin="dense"
-                        />
-                      </Grid>
-                      <Grid item>
-                        <TextField
-                          required
-                          id="phone"
-                          label="Phone"
-                          onChange={this.handleChange("phone")}
-                          type="tel"
-                          className={classes.textField}
-                          margin="dense"
-                        />
-                      </Grid>
-                      <Grid item>
-                        <TextField
-                          required
-                          inputRef={element => (this.password.current = element)}
-                          id="password"
-                          label="Password"
-                          onChange={this.handlePasswordChange}
-                          type="password"
-                          className={classes.textField}
-                          margin="dense"
-                          helperText="Must contain a minimum of 8 characters and at least one uppercase and one lowercase letter"
-                        />
-                      </Grid>
-                      <Grid item>
-                        <TextField
-                          required
-                          inputRef={element =>
-                            (this.confirmPassword.current = element)
-                          }
-                          id="confirmPassword"
-                          label="Confirm Password"
-                          onChange={this.validatePassword}
-                          type="password"
-                          className={classes.textField}
-                          margin="dense"
-                        />
-                      </Grid>
+                  <Grid
+                    container
+                    wrap="nowrap"
+                    spacing={0}
+                    direction="column"
+                    alignContent="center"
+                  >
+                    <Grid item>
+                      <TextField
+                        required
+                        id="name"
+                        label="Name"
+                        className={classes.textField}
+                        onChange={this.handleChange("name")}
+                        autoComplete="name"
+                        margin="dense"
+                      />
                     </Grid>
-                    <Button
-                      className={classes.registerButton}
-                      variant="contained"
-                      color="primary"
-                      type="submit"
-                      disabled={this.state.processing}
-                    >
-                      Register
+                    <Grid item>
+                      <TextField
+                        required
+                        id="email"
+                        label="Email"
+                        type="email"
+                        className={classes.textField}
+                        onChange={this.handleChange("email")}
+                        autoComplete="email"
+                        margin="dense"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        required
+                        id="company"
+                        label="Company"
+                        className={classes.textField}
+                        onChange={this.handleChange("company")}
+                        autoComplete="organization"
+                        margin="dense"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        required
+                        id="address"
+                        label="Address"
+                        className={classes.textField}
+                        onChange={this.handleChange("address")}
+                        autoComplete="address-line1"
+                        margin="dense"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        required
+                        id="city"
+                        label="City"
+                        className={classes.textField}
+                        onChange={this.handleChange("city")}
+                        autoComplete="address-line2"
+                        margin="dense"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        required
+                        id="state"
+                        label="State"
+                        className={classes.textField}
+                        onChange={this.handleChange("state")}
+                        autoComplete="address-line2"
+                        margin="dense"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        required
+                        id="postcode"
+                        label="Postcode"
+                        onChange={this.handleChange("postcode")}
+                        autoComplete="postal-code"
+                        type="tel"
+                        className={classes.textField}
+                        margin="dense"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        required
+                        id="phone"
+                        label="Phone"
+                        onChange={this.handleChange("phone")}
+                        autoComplete="tel"
+                        type="tel"
+                        className={classes.textField}
+                        margin="dense"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        required
+                        inputRef={element => (this.password.current = element)}
+                        id="password"
+                        label="Password"
+                        onChange={this.handlePasswordChange}
+                        autoComplete="new-password"
+                        type="password"
+                        className={classes.textField}
+                        margin="dense"
+                        helperText="Must contain a minimum of 8 characters and at least one uppercase and one lowercase letter"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        required
+                        inputRef={element =>
+                          (this.confirmPassword.current = element)
+                        }
+                        id="confirmPassword"
+                        label="Confirm Password"
+                        onChange={this.validatePassword}
+                        autoComplete="new-password"
+                        type="password"
+                        className={classes.textField}
+                        margin="dense"
+                      />
+                    </Grid>
+                  </Grid>
+                  <Button
+                    className={classes.registerButton}
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    disabled={this.state.processing}
+                  >
+                    Register
                   </Button>
-                    <Grid
-                      container
-                      wrap="nowrap"
-                      spacing={0}
-                      direction="column"
-                      alignContent="center"
-                    >
-                      {this.state.processing && (
-                        <Grid item>
-                          <CircularProgress className={classes.progress} />
-                        </Grid>
-                      )}
+                  <Grid
+                    container
+                    wrap="nowrap"
+                    spacing={0}
+                    direction="column"
+                    alignContent="center"
+                  >
+                    {this.state.processing && (
                       <Grid item>
-                        <Typography className={classes.error}>
-                          {this.state.error}
-                        </Typography>
+                        <CircularProgress className={classes.progress} />
                       </Grid>
+                    )}
+                    <Grid item>
+                      <Typography className={classes.error}>
+                        {this.state.error}
+                      </Typography>
                     </Grid>
-                  </div>
-                )}
+                  </Grid>
+                </div>
+              )}
             </Paper>
           </form>
         </div>
