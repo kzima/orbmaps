@@ -5,8 +5,10 @@ import Paper from "@material-ui/core/Paper";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import { injectStripe } from "react-stripe-elements";
 import { withStyles } from "@material-ui/core/styles";
 
+import CardSection from "./CardSection";
 import logo from "../logo.png";
 
 const registerURL = process.env.REACT_APP_REGISTER_URL;
@@ -49,6 +51,13 @@ const styles = theme => ({
   },
   progress: {
     marginTop: theme.spacing.unit * 2
+  },
+  inputsGrid: {
+    marginBottom: 20
+  },
+  price: {
+    marginTop: 30,
+    marginBottom: 10
   }
 });
 
@@ -56,17 +65,16 @@ class RegisterForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: {
-        name: "",
-        company: "",
-        email: "",
-        address: "",
-        city: "",
-        state: "",
-        postcode: "",
-        phone: "",
-        password: ""
-      },
+      name: "",
+      company: "",
+      email: "",
+      address: "",
+      city: "",
+      state: "",
+      postcode: "",
+      phone: "",
+      password: "",
+      token: "",
       processing: false,
       error: "",
       success: false
@@ -80,10 +88,8 @@ class RegisterForm extends React.Component {
   }
 
   handleChange = name => event => {
-    const data = Object.assign({}, this.state.data);
-    data[name] = event.target.value;
     this.setState({
-      data: data
+      [name]: event.target.value
     });
   };
 
@@ -112,6 +118,7 @@ class RegisterForm extends React.Component {
     this.validatePassword();
   };
 
+  // REVIEW:
   handleSubmit = event => {
     event.preventDefault();
     const contact =
@@ -121,6 +128,14 @@ class RegisterForm extends React.Component {
       processing: true,
       error: ""
     });
+    // this.props.stripe
+    //   .createToken({ name: this.state.data.name })
+    //   .then(({ token }) => {
+    //     this.setState({
+    //       token: token
+    //     });
+    //   });
+
     fetch(registerURL, {
       method: "POST",
       body: JSON.stringify(this.state.data),
@@ -166,6 +181,7 @@ class RegisterForm extends React.Component {
                   </Typography>
                   <Grid
                     container
+                    className={classes.inputsGrid}
                     wrap="nowrap"
                     spacing={0}
                     direction="column"
@@ -291,7 +307,21 @@ class RegisterForm extends React.Component {
                         margin="dense"
                       />
                     </Grid>
+                    <Grid item>
+                      <Typography
+                        className={classes.price}
+                        variant="subheading"
+                        color="primary"
+                        gutterBottom
+                      >
+                        Presale Plan: 1 License - $195.00
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <CardSection />
+                    </Grid>
                   </Grid>
+
                   <Button
                     className={classes.registerButton}
                     variant="contained"
@@ -329,4 +359,4 @@ class RegisterForm extends React.Component {
   }
 }
 
-export default withStyles(styles)(RegisterForm);
+export default injectStripe(withStyles(styles)(RegisterForm));

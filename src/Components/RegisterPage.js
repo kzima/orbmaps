@@ -1,6 +1,8 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
+import { StripeProvider } from "react-stripe-elements";
+import { Elements } from "react-stripe-elements";
 
 import Image from "../bg.png";
 import RegisterForm from "./RegisterForm";
@@ -20,7 +22,11 @@ const styles = theme => ({
 function RegisterPage(props) {
   return (
     <div className={props.classes.root}>
-      <RegisterForm />
+      <StripeProvider apiKey="pk_test_f6CVQllFUxotTAiPmmtB2jVy">
+        <Elements>
+          <RegisterForm />
+        </Elements>
+      </StripeProvider>
       <Button
         variant="contained"
         className={props.classes.button}

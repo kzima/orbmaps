@@ -3,7 +3,7 @@ import { Switch } from "react-router-dom";
 
 import TopBarLayout from "./Components/TopBarLayout";
 import NoTopBarLayout from "./Components/NoTopBarLayout";
-// import HomePage from "./Components/HomePage";
+import HomePage from "./Components/HomePage";
 import AboutPage from "./Components/AboutPage";
 import ContactPage from "./Components/ContactPage";
 import RegisterPage from "./Components/RegisterPage";
@@ -19,8 +19,8 @@ class App extends Component {
             <AppRoute
               exact
               path="/"
-              layout={NoTopBarLayout}
-              component={RegisterPage}
+              layout={TopBarLayout}
+              component={HomePage}
             />
             <AppRoute
               exact
