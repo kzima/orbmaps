@@ -114,8 +114,9 @@ class RegisterForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const errorMessage =
-      "Registration unsuccessful. Contact us for assistance at support@orbmaps.com";
+    const contact =
+      "Please try again or contact us for assistance at support@orbmaps.com";
+    const errorMessage = `Registration unsuccessful. ${contact}`;
     this.setState({
       processing: true,
       error: ""
@@ -125,21 +126,22 @@ class RegisterForm extends React.Component {
       body: JSON.stringify(this.state.data),
       headers: { "Content-Type": "application/json" }
     })
-      .catch(({ message }) => {
-        this.setState({
-          processing: false,
-          error: message || errorMessage
-        });
-      })
       .then(response => {
         if (!response.ok || response === undefined) {
-          this.setState({
-            processing: false,
-            error: errorMessage
+          return response.json().then(error => {
+            throw error.message;
           });
-        } else {
-          this.setState({ success: true });
         }
+        return response.json();
+      })
+      .then(() => {
+        this.setState({ success: true });
+      })
+      .catch(message => {
+        this.setState({
+          processing: false,
+          error: message ? `${message} ${contact}` : errorMessage
+        });
       });
   };
 
@@ -221,7 +223,7 @@ class RegisterForm extends React.Component {
                         label="City"
                         className={classes.textField}
                         onChange={this.handleChange("city")}
-                        autoComplete="address-line2"
+                        autoComplete="address-level2"
                         margin="dense"
                       />
                     </Grid>
@@ -232,7 +234,7 @@ class RegisterForm extends React.Component {
                         label="State"
                         className={classes.textField}
                         onChange={this.handleChange("state")}
-                        autoComplete="address-line2"
+                        autoComplete="address-level1"
                         margin="dense"
                       />
                     </Grid>
