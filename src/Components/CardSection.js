@@ -24,9 +24,6 @@ class CardSection extends React.Component {
 
     return (
       <label>
-        {/* <Typography variant="caption" gutterBottom> */}
-        {/* Card details */}
-        {/* </Typography> */}
         <div className={classes.cardContainer}>
           <CardElement
             hidePostalCode={true}

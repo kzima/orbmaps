@@ -10,6 +10,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 import CardSection from "./CardSection";
 import logo from "../logo.png";
+import { apiURL, http } from "../api/config";
 
 const registerURL = process.env.REACT_APP_REGISTER_URL;
 
@@ -128,36 +129,37 @@ class RegisterForm extends React.Component {
       processing: true,
       error: ""
     });
-    // this.props.stripe
-    //   .createToken({ name: this.state.data.name })
-    //   .then(({ token }) => {
-    //     this.setState({
-    //       token: token
-    //     });
-    //   });
-
-    fetch(registerURL, {
-      method: "POST",
-      body: JSON.stringify(this.state.data),
-      headers: { "Content-Type": "application/json" }
-    })
-      .then(response => {
-        if (!response.ok || response === undefined) {
-          return response.json().then(error => {
-            throw error.message;
-          });
-        }
-        return response.json();
-      })
-      .then(() => {
-        this.setState({ success: true });
-      })
-      .catch(message => {
-        this.setState({
+    this.props.stripe.createToken({ name: this.state.name }).then(response => {
+      if (response.error) {
+        return this.setState({
           processing: false,
-          error: message ? `${message} ${contact}` : errorMessage
+          error: response.error.message
         });
-      });
+      }
+      http({
+        url: `${apiURL}/register`,
+        method: "POST",
+        params: { ...this.state.data, token: response.token.id },
+        headers: { "Content-Type": "application/json" }
+      })
+        .then(response => {
+          if (!response.ok || response === undefined) {
+            return response.json().then(error => {
+              throw error.message;
+            });
+          }
+          return response.json();
+        })
+        .then(() => {
+          this.setState({ success: true });
+        })
+        .catch(message => {
+          this.setState({
+            processing: false,
+            error: message ? `${message} ${contact}` : errorMessage
+          });
+        });
+    });
   };
 
   render() {
