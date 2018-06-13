@@ -57,8 +57,14 @@ const styles = theme => ({
     marginBottom: 20
   },
   price: {
-    marginTop: 30,
+    marginTop: 35,
     marginBottom: 10
+  },
+  terms: {
+    maxWidth: 450,
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: 30
   }
 });
 
@@ -119,7 +125,6 @@ class RegisterForm extends React.Component {
     this.validatePassword();
   };
 
-  // REVIEW:
   handleSubmit = event => {
     event.preventDefault();
     const contact =
@@ -316,14 +321,23 @@ class RegisterForm extends React.Component {
                         color="primary"
                         gutterBottom
                       >
-                        Presale Plan: 1 License - $195.00
+                        Presale Plan: 1 License ($195.00)
                       </Typography>
                     </Grid>
                     <Grid item>
                       <CardSection />
                     </Grid>
                   </Grid>
-
+                  <Typography className={classes.terms} variant="caption">
+                    By registering, I confirm that I understand and agree to the{" "}
+                    <a href="https://www.orbmaps.com/terms-conditions">
+                      Terms & Conditions
+                    </a>{" "}
+                    and{" "}
+                    <a href="https://www.orbmaps.com/privacy-policy">
+                      Privacy Policy
+                    </a>.
+                  </Typography>
                   <Button
                     className={classes.registerButton}
                     variant="contained"
