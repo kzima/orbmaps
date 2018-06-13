@@ -1,7 +1,8 @@
 import React from "react";
-// import Typography from "@material-ui/core/Typography";
 import { CardElement } from "react-stripe-elements";
 import { withStyles } from "@material-ui/core/styles";
+
+import stripeLogo from "../stripe-logo.png";
 
 const styles = theme => ({
   cardContainer: {
@@ -14,7 +15,11 @@ const styles = theme => ({
     webkitTransition: "box-shadow 150ms ease",
     transition: "box - shadow 150ms ease",
     maxWidth: 420,
-    margin: "auto"
+    margin: "auto",
+    marginBottom: 10
+  },
+  stripeLogo: {
+    width: 100
   }
 });
 
@@ -23,17 +28,21 @@ class CardSection extends React.Component {
     const { classes } = this.props;
 
     return (
-      <label>
-        {/* <Typography variant="caption" gutterBottom> */}
-        {/* Card details */}
-        {/* </Typography> */}
-        <div className={classes.cardContainer}>
-          <CardElement
-            hidePostalCode={true}
-            style={{ base: { fontSize: "18px" } }}
-          />
-        </div>
-      </label>
+      <div>
+        <label>
+          <div className={classes.cardContainer}>
+            <CardElement
+              hidePostalCode={true}
+              style={{ base: { fontSize: "18px" } }}
+            />
+          </div>
+        </label>
+        <img
+          className={classes.stripeLogo}
+          src={stripeLogo}
+          alt="stripe logo"
+        />
+      </div>
     );
   }
 }
