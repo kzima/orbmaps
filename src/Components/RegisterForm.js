@@ -38,14 +38,14 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 300,
+    width: 450,
     maxWidth: "90%"
   },
   error: {
     color: "red"
   },
   logo: {
-    width: 300,
+    height: 70,
     maxWidth: "90%",
     margin: theme.spacing.unit
   },
@@ -165,9 +165,9 @@ class RegisterForm extends React.Component {
     return (
       <div className={classes.root}>
         <div className={classes.wrapper}>
+          <img className={classes.logo} src={logo} alt="orbmaps logo" />
           <form onSubmit={this.handleSubmit}>
             <Paper elevation={14} className={classes.paper}>
-              <img className={classes.logo} src={logo} alt="orbmaps logo" />
               {this.state.success ? (
                 <Typography variant="subheading" gutterBottom>
                   Registration successful, thank you! Check your email account
